@@ -8,12 +8,36 @@ public class Main {
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-       String x=input.next();
-       int k=input.nextInt();
-        System.out.println(getLucky(x,k));
-
+      String s=input.next();
+        System.out.println(largestOddNumber(s));
 
     }
+    public static String largestOddNumber(String s) {
+         String res="";
+         int k=-1;
+         for (int i=s.length()-1;i>=0;i--){
+             if (s.charAt(i)%2!=0){
+                 k=i;
+                 break;
+             }
+         }
+         return k==-1?"":s.substring(0,k+1);
+    }
+    public static int[] sumEvenAfterQueries(int[] nums, int[][] queries) {
+        int []ls=new int[queries.length];
+        int sum=0;
+        for (int i:nums){
+            sum+=i;
+        }
+        for (int i=0;i<queries.length;i++){
+            int val=queries[i][0],index=queries[i][1];
+            nums[index]=val+nums[index];
+            if(nums[index]%2==0)sum-=nums[index];
+            if (sum%2==0)nums[i]=sum;
+        }
+            return ls;
+    }
+
     public static int getLucky(String s, int k) {
          String st="";
         for (char c:s.toCharArray())st+=c-'a'+1;
