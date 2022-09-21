@@ -12,32 +12,23 @@ public class Main {
        int k=input.nextInt();
         System.out.println(getLucky(x,k));
 
+
     }
     public static int getLucky(String s, int k) {
-        Map<Character,String>map=new HashMap<>();
-        char a='a';
-        for (int i=1;i<=26;i++){
-            map.put(a,String.valueOf(i));
-            a++;
+         String st="";
+        for (char c:s.toCharArray())st+=c-'a'+1;
+        int res=0;
+        while (k>0){
+            res=0;
+            for (int i=0;i<st.length();i++){
+                res+=st.charAt(i)-'0';
+            }
+            st=String.valueOf(res);
+            --k;
         }
-        String x="";
-        for (char c:s.toCharArray()){
-            x+=map.get(c);
-        }
-        return repeatSum(x,k);
-
+        return res;
     }
-    public static int repeatSum(String s,int k){
 
-        int x=Integer.parseInt(s);
-       if (k==0)return x-Integer.parseInt(s);
-
-       for (int i=0;i<s.length();i++){
-           x+=s.charAt(i)-'0';
-       }
-       k--;
-       return repeatSum(String.valueOf(x),k);
-    }
     public static boolean areOccurrencesEqual(String s) {
     Map<Character,Integer>map=new HashMap<>();
     Set<Integer>set=new HashSet<>();
