@@ -91,7 +91,7 @@ public class Main {
         }
         return res;
     }
-
+ // https://leetcode.com/problems/check-if-all-characters-have-equal-number-of-occurrences/
     public static boolean areOccurrencesEqual(String s) {
     Map<Character,Integer>map=new HashMap<>();
     Set<Integer>set=new HashSet<>();
@@ -100,6 +100,7 @@ public class Main {
     return set.size()==1?true:false;
 
     }
+   // https://leetcode.com/problems/length-of-the-longest-alphabetical-continuous-substring/
     public static int longestContinuousSubstring(String s) {
         int count=1,max=1;
         for (int i=0;i<s.length()-1;i++){
@@ -112,6 +113,21 @@ public class Main {
         }
          return max;
     }
+    //https://leetcode.com/problems/maximum-matching-of-players-with-trainers/
+    public int matchPlayersAndTrainers(int[] players, int[] trainers) {
+        int i=0,j=0,res=0;
+        Arrays.sort(players);
+        Arrays.sort(trainers);
+        while(i<players.length&&j<trainers.length){
+            if(players[i]<=trainers[j]){
+                i++;
+                res++;
+            }
+            j++;
+        }
+        return res;
+    }
+    //https://leetcode.com/problems/maximum-ascending-subarray-sum/
     public static int maxAscendingSum(int[] nums) {
      int sum=nums[0],max=Integer.MIN_VALUE;
 
