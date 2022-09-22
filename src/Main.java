@@ -8,10 +8,47 @@ public class Main {
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-      String s=input.next();
-        System.out.println(largestOddNumber(s));
+      String s=input.nextLine();
+       String first=input.next(),second=input.next();
+        System.out.println(findOcurrences(s,first,second));
 
     }
+    //https://leetcode.com/problems/maximum-number-of-balloons/
+    public static int maxNumberOfBalloons(String text) {
+        int b=0,a=0,l=0,o=0,n=0,res=0;
+        for (char s:text.toCharArray()){
+            if (s=='a')a++;
+            if (s=='b')b++;
+            if (s=='l')l++;
+            if (s=='o')o++;
+            if (s=='n')n++;
+        }
+          while (a!=0&&b!=0&&l>1&&o>1&&n!=0){
+              a-=1;b-=1;l-=2;o-=2;n-=1;
+              res++;
+          }
+          return res;
+    }
+    // https://leetcode.com/problems/occurrences-after-bigram/
+    public static String[] findOcurrences(String text, String first, String second) {
+
+        String []ls=text.split(" ");
+        List<String>res=new ArrayList<>();
+        for (int i=0;i<ls.length-2;i++){
+            if (ls[i].equals(first)&& ls[i+1].equals(second)){
+                res.add(ls[i+2]);
+            }
+        }
+        String []out=new String[res.size()];
+        int i=0;
+        for(String x:res){
+            out[i]=x;
+            i++;
+        }
+        return out;
+
+    }
+    //https://leetcode.com/problems/largest-odd-number-in-string/
     public static String largestOddNumber(String s) {
          String res="";
          int k=-1;
@@ -23,6 +60,8 @@ public class Main {
          }
          return k==-1?"":s.substring(0,k+1);
     }
+
+    //https://leetcode.com/problems/sum-of-even-numbers-after-queries/
     public static int[] sumEvenAfterQueries(int[] nums, int[][] queries) {
         int []ls=new int[queries.length];
         int sum=0;
@@ -37,7 +76,7 @@ public class Main {
         }
             return ls;
     }
-
+    //https://leetcode.com/problems/sum-of-digits-of-string-after-convert/
     public static int getLucky(String s, int k) {
          String st="";
         for (char c:s.toCharArray())st+=c-'a'+1;
