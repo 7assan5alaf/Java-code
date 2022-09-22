@@ -1,11 +1,10 @@
 # Java-code
 
-#solve problems of leetcode
+#solve problem in leetcode by java language
 
-#links of problem of leetcode
+#link my account leetcode
 
-1-https://leetcode.com/problems/sum-of-digits-of-string-after-convert/
+1-https://leetcode.com/7asan/
 
-2-https://leetcode.com/problems/sum-of-even-numbers-after-queries/
+#In the main function, there is a solution to the problems, and for each solution there is a link to the problem
 
-3-https://leetcode.com/problems/largest-odd-number-in-string/
