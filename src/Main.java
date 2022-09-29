@@ -8,9 +8,47 @@ public class Main {
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-      String s=input.nextLine();
-       String first=input.next(),second=input.next();
-        System.out.println(findOcurrences(s,first,second));
+      int n=input.nextInt();
+      String []names=new String[n];
+      for (int i=0;i<n;i++)names[i]=input.next();
+      int []heights=new int[n];
+      setInput(heights);
+     for (String c:sortPeople(names,heights)) System.out.print(c+" ");
+
+    }
+    //https://leetcode.com/problems/sort-the-people/
+    public static String[] sortPeople(String[] names, int[] heights) {
+           String []res=new String[names.length];
+             Map<Integer,String>map=new HashMap<>();
+             for (int i=0;i<names.length;i++)map.put(heights[i],names[i]);
+        Map<Integer, String> treeMap = new TreeMap<Integer, String>(
+                new Comparator<Integer>() {
+                    @Override
+                    public int compare(Integer o1, Integer o2) {
+                        return o2.compareTo(o1);
+                    }
+
+                });
+        treeMap.putAll(map);
+             int index=0;
+             for (int i:treeMap.keySet()){
+                 res[index]=map.get(i);
+                 index++;
+             }
+             return res;
+    }
+    //https://leetcode.com/problems/substrings-of-size-three-with-distinct-characters/
+    public static int countGoodSubstrings(String s) {
+          int res=0;
+          for (int i=0;i<s.length()-2;i++){
+              Set<Character>set=new HashSet<>();
+              String sub=s.substring(i,i+3);
+             set.add(sub.charAt(0));
+             set.add(sub.charAt(1));
+             set.add(sub.charAt(2));
+             if (set.size()==3)res++;
+          }
+          return  res;
 
     }
     //https://leetcode.com/problems/maximum-number-of-balloons/
