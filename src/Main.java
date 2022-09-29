@@ -8,13 +8,48 @@ public class Main {
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-      int n=input.nextInt();
-      String []names=new String[n];
-      for (int i=0;i<n;i++)names[i]=input.next();
-      int []heights=new int[n];
-      setInput(heights);
-     for (String c:sortPeople(names,heights)) System.out.print(c+" ");
 
+        int n=input.nextInt();
+        String []words=new String[n];
+        for (int i=0;i<words.length;i++)words[i]=input.next();
+
+        String chars=input.next();
+        System.out.println(countCharacters(words,chars));
+
+    }
+    //https://leetcode.com/problems/find-words-that-can-be-formed-by-characters/
+    public static int countCharacters(String[] words, String chars) {
+           Map<Character,Integer>mapW=new HashMap<>();
+           Map<Character,Integer>mapC=new HashMap<>();
+           int ans=0,count=0;
+           for (char c:chars.toCharArray())mapC.put(c,mapC.getOrDefault(c,0)+1);
+           for (String s:words){
+               mapW.clear();
+               for (char c:s.toCharArray()){
+                   mapW.put(c,mapW.getOrDefault(c,0)+1);
+               }
+               for (char ch:mapW.keySet()){
+                   if (mapC.containsKey(ch)){
+                       if (mapC.get(ch)>=mapW.get(ch)){
+                           count+=mapW.get(ch);
+                       }
+                   }
+               }
+               if (count==s.length())ans+=count;
+               count=0;
+           }
+           return ans;
+    }
+    //https://leetcode.com/problems/n-th-tribonacci-number/
+    public static int tribonacci(int n) {
+       int []ans=new int[n+3];
+       ans[0]=0;
+       ans[1]=1;
+       ans[2]=1;
+       for (int i=3;i<=n;i++){
+           ans[i]=ans[i-1]+ans[i-2]+ans[i-3];
+       }
+       return ans[n];
     }
     //https://leetcode.com/problems/sort-the-people/
     public static String[] sortPeople(String[] names, int[] heights) {
