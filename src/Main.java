@@ -9,13 +9,39 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        int n=input.nextInt();
-        String []words=new String[n];
-        for (int i=0;i<words.length;i++)words[i]=input.next();
 
-        String chars=input.next();
-        System.out.println(countCharacters(words,chars));
+       String num=input.next();
+        System.out.println(digitCount(num));
 
+    }
+    //https://leetcode.com/problems/check-if-number-has-equal-digit-count-and-digit-value/
+    public static boolean digitCount(String num) {
+        int []ans=new int[10];
+         for (char a:num.toCharArray()){
+             ++ans[a-'0'];
+         }
+         for (int i=0;i<num.length();i++){
+             if (ans[i]!=num.charAt(i)-'0')return false;
+         }
+        return  true;
+
+    }
+    //https://leetcode.com/problems/distribute-candies-to-people/
+    public static int[] distributeCandies(int candies, int num_people) {
+              int []arr=new int[num_people];
+            for (int i=0;candies>0;candies-=i){
+                arr[i%num_people]+=Math.min(candies,++i);
+            }
+            return arr;
+    }
+    //https://leetcode.com/problems/defanging-an-ip-address/
+    public static String defangIPaddr(String address) {
+        String res="";
+        for (char c:address.toCharArray()){
+            if (c=='.')res+="[.]";
+            else res+=c;
+        }
+        return res;
     }
     //https://leetcode.com/problems/find-words-that-can-be-formed-by-characters/
     public static int countCharacters(String[] words, String chars) {
