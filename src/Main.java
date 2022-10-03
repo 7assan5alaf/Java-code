@@ -5,14 +5,25 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Main {
-    static Scanner input = new Scanner(System.in);
-
+     static Scanner input = new Scanner(System.in);
     public static void main(String[] args) throws IOException {
 
+        
 
-       String num=input.next();
-        System.out.println(digitCount(num));
 
+    }
+    //https://leetcode.com/problems/maximum-sum-of-an-hourglass/
+    public static int maxSum(int[][] grid) {
+        int max=Integer.MIN_VALUE;
+        int r=grid.length,c=grid[0].length;
+        for (int i=0;i<r-2;i++){
+            for (int j=0;j<c-2;j++){
+                int maxSum=grid[i][j]+grid[i][j+1]+grid[i][j+2]
+                        +grid[i+1][j+1]+grid[i+2][j]+grid[i+2][j+1]+grid[i+2][j+2];
+                max=Math.max(maxSum,max);
+            }
+        }
+        return max;
     }
     //https://leetcode.com/problems/check-if-number-has-equal-digit-count-and-digit-value/
     public static boolean digitCount(String num) {
