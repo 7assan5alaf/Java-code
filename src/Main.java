@@ -1,16 +1,92 @@
-import java.io.DataInput;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-
 public class Main {
-     static Scanner input = new Scanner(System.in);
+        static Scanner input=new Scanner(System.in);
     public static void main(String[] args) throws IOException {
+       String s=input.next();
+        System.out.println(isPalindromicSubString(s));
 
-        
+    }
+    //https://leetcode.com/problems/palindromic-substrings/
+    public static int  isPalindromicSubString(String s){
+      int res=0;
+      for (int i=0;i<s.length();i++){
+          res+=isPalindromic(s,i);
+      }
+      return res;
+    }
+    public static  int isPalindromic(String str,int center){
+         int count=1;
+         count+=getPalindrom(str,center-1,center+1);
+         count+=getPalindrom(str,center,center+1);
+         return count;
+    }
+    public static  int getPalindrom(String str,int start,int end){
+        int count=0;
+        while (start>=0&&end<str.length()){
+            if (str.charAt(start)!=str.charAt(end))break;
+            count++;
+            start--;end++;
 
+        }
+        return count;
+    }
+    //https://leetcode.com/problems/flipping-an-image/
+    public static int[][] flipAndInvertImage(int[][] image) {
+        int [][]ans=new int[image.length][image.length];
+           for (int i=0;i<image.length;i++){
+               int k=0;
+               for (int j=image.length-1;j>=0&&k<image.length;j--){
+                   if (image[i][j]==1)ans[i][k]=0;
+                   else ans[i][k]=1;
+                   k++;
+               }
+           }
+           return ans;
+    }
+    //https://leetcode.com/problems/relative-ranks/
+    public static String[] findRelativeRanks(int[] score) {
+        String []res=new String[score.length];
+        List<Integer>ls=new ArrayList<>();
+        Map<Integer,Integer>map=new HashMap<>();
+        for (int i:score)ls.add(i);
+        Arrays.sort(score);
+        int size=score.length-1;
+        for (int i=1;i<=ls.size();i++){
+            map.put(score[size],i);
+            size--;
+        }
+        for (int i:map.keySet()){
+            if (map.get(i)==1){
+                res[ls.indexOf(i)]="Gold Medal";
+            }
+            else if (map.get(i)==2){
+                res[ls.indexOf(i)]="Silver Medal";
+            }
+            else if (map.get(i)==3){
+                res[ls.indexOf(i)]="Bronze Medal";
+            }else {
+                res[ls.indexOf(i)]=String.valueOf(map.get(i));
+            }
+        }
+        return res;
+    }
+   // https://leetcode.com/problems/minimum-time-to-make-rope-colorful/
+    public static int minCost(String colors, int[] neededTime) {
+        int time=neededTime[0],max=neededTime[0];
+        char prev=colors.charAt(0);
+        for (int i=1;i<colors.length();i++){
+            time+=neededTime[i];
+            if (prev==colors.charAt(i)){
+                max=Math.max(max,neededTime[i]);
+            }else {
+                time-=max;
 
+                max=neededTime[i];
+            }
+            prev=colors.charAt(i);
+        }
+         return time-max;
     }
     //https://leetcode.com/problems/maximum-sum-of-an-hourglass/
     public static int maxSum(int[][] grid) {
