@@ -1,16 +1,202 @@
-import java.io.DataInput;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-
 public class Main {
-    static Scanner input = new Scanner(System.in);
-
+        static Scanner input=new Scanner(System.in);
     public static void main(String[] args) throws IOException {
-      String s=input.nextLine();
-       String first=input.next(),second=input.next();
-        System.out.println(findOcurrences(s,first,second));
+       String s=input.next();
+        System.out.println(isPalindromicSubString(s));
+
+    }
+    //https://leetcode.com/problems/palindromic-substrings/
+    public static int  isPalindromicSubString(String s){
+      int res=0;
+      for (int i=0;i<s.length();i++){
+          res+=isPalindromic(s,i);
+      }
+      return res;
+    }
+    public static  int isPalindromic(String str,int center){
+         int count=1;
+         count+=getPalindrom(str,center-1,center+1);
+         count+=getPalindrom(str,center,center+1);
+         return count;
+    }
+    public static  int getPalindrom(String str,int start,int end){
+        int count=0;
+        while (start>=0&&end<str.length()){
+            if (str.charAt(start)!=str.charAt(end))break;
+            count++;
+            start--;end++;
+
+        }
+        return count;
+    }
+    //https://leetcode.com/problems/flipping-an-image/
+    public static int[][] flipAndInvertImage(int[][] image) {
+        int [][]ans=new int[image.length][image.length];
+           for (int i=0;i<image.length;i++){
+               int k=0;
+               for (int j=image.length-1;j>=0&&k<image.length;j--){
+                   if (image[i][j]==1)ans[i][k]=0;
+                   else ans[i][k]=1;
+                   k++;
+               }
+           }
+           return ans;
+    }
+    //https://leetcode.com/problems/relative-ranks/
+    public static String[] findRelativeRanks(int[] score) {
+        String []res=new String[score.length];
+        List<Integer>ls=new ArrayList<>();
+        Map<Integer,Integer>map=new HashMap<>();
+        for (int i:score)ls.add(i);
+        Arrays.sort(score);
+        int size=score.length-1;
+        for (int i=1;i<=ls.size();i++){
+            map.put(score[size],i);
+            size--;
+        }
+        for (int i:map.keySet()){
+            if (map.get(i)==1){
+                res[ls.indexOf(i)]="Gold Medal";
+            }
+            else if (map.get(i)==2){
+                res[ls.indexOf(i)]="Silver Medal";
+            }
+            else if (map.get(i)==3){
+                res[ls.indexOf(i)]="Bronze Medal";
+            }else {
+                res[ls.indexOf(i)]=String.valueOf(map.get(i));
+            }
+        }
+        return res;
+    }
+   // https://leetcode.com/problems/minimum-time-to-make-rope-colorful/
+    public static int minCost(String colors, int[] neededTime) {
+        int time=neededTime[0],max=neededTime[0];
+        char prev=colors.charAt(0);
+        for (int i=1;i<colors.length();i++){
+            time+=neededTime[i];
+            if (prev==colors.charAt(i)){
+                max=Math.max(max,neededTime[i]);
+            }else {
+                time-=max;
+
+                max=neededTime[i];
+            }
+            prev=colors.charAt(i);
+        }
+         return time-max;
+    }
+    //https://leetcode.com/problems/maximum-sum-of-an-hourglass/
+    public static int maxSum(int[][] grid) {
+        int max=Integer.MIN_VALUE;
+        int r=grid.length,c=grid[0].length;
+        for (int i=0;i<r-2;i++){
+            for (int j=0;j<c-2;j++){
+                int maxSum=grid[i][j]+grid[i][j+1]+grid[i][j+2]
+                        +grid[i+1][j+1]+grid[i+2][j]+grid[i+2][j+1]+grid[i+2][j+2];
+                max=Math.max(maxSum,max);
+            }
+        }
+        return max;
+    }
+    //https://leetcode.com/problems/check-if-number-has-equal-digit-count-and-digit-value/
+    public static boolean digitCount(String num) {
+        int []ans=new int[10];
+         for (char a:num.toCharArray()){
+             ++ans[a-'0'];
+         }
+         for (int i=0;i<num.length();i++){
+             if (ans[i]!=num.charAt(i)-'0')return false;
+         }
+        return  true;
+
+    }
+    //https://leetcode.com/problems/distribute-candies-to-people/
+    public static int[] distributeCandies(int candies, int num_people) {
+              int []arr=new int[num_people];
+            for (int i=0;candies>0;candies-=i){
+                arr[i%num_people]+=Math.min(candies,++i);
+            }
+            return arr;
+    }
+    //https://leetcode.com/problems/defanging-an-ip-address/
+    public static String defangIPaddr(String address) {
+        String res="";
+        for (char c:address.toCharArray()){
+            if (c=='.')res+="[.]";
+            else res+=c;
+        }
+        return res;
+    }
+    //https://leetcode.com/problems/find-words-that-can-be-formed-by-characters/
+    public static int countCharacters(String[] words, String chars) {
+           Map<Character,Integer>mapW=new HashMap<>();
+           Map<Character,Integer>mapC=new HashMap<>();
+           int ans=0,count=0;
+           for (char c:chars.toCharArray())mapC.put(c,mapC.getOrDefault(c,0)+1);
+           for (String s:words){
+               mapW.clear();
+               for (char c:s.toCharArray()){
+                   mapW.put(c,mapW.getOrDefault(c,0)+1);
+               }
+               for (char ch:mapW.keySet()){
+                   if (mapC.containsKey(ch)){
+                       if (mapC.get(ch)>=mapW.get(ch)){
+                           count+=mapW.get(ch);
+                       }
+                   }
+               }
+               if (count==s.length())ans+=count;
+               count=0;
+           }
+           return ans;
+    }
+    //https://leetcode.com/problems/n-th-tribonacci-number/
+    public static int tribonacci(int n) {
+       int []ans=new int[n+3];
+       ans[0]=0;
+       ans[1]=1;
+       ans[2]=1;
+       for (int i=3;i<=n;i++){
+           ans[i]=ans[i-1]+ans[i-2]+ans[i-3];
+       }
+       return ans[n];
+    }
+    //https://leetcode.com/problems/sort-the-people/
+    public static String[] sortPeople(String[] names, int[] heights) {
+           String []res=new String[names.length];
+             Map<Integer,String>map=new HashMap<>();
+             for (int i=0;i<names.length;i++)map.put(heights[i],names[i]);
+        Map<Integer, String> treeMap = new TreeMap<Integer, String>(
+                new Comparator<Integer>() {
+                    @Override
+                    public int compare(Integer o1, Integer o2) {
+                        return o2.compareTo(o1);
+                    }
+
+                });
+        treeMap.putAll(map);
+             int index=0;
+             for (int i:treeMap.keySet()){
+                 res[index]=map.get(i);
+                 index++;
+             }
+             return res;
+    }
+    //https://leetcode.com/problems/substrings-of-size-three-with-distinct-characters/
+    public static int countGoodSubstrings(String s) {
+          int res=0;
+          for (int i=0;i<s.length()-2;i++){
+              Set<Character>set=new HashSet<>();
+              String sub=s.substring(i,i+3);
+             set.add(sub.charAt(0));
+             set.add(sub.charAt(1));
+             set.add(sub.charAt(2));
+             if (set.size()==3)res++;
+          }
+          return  res;
 
     }
     //https://leetcode.com/problems/maximum-number-of-balloons/
@@ -91,7 +277,7 @@ public class Main {
         }
         return res;
     }
-
+ // https://leetcode.com/problems/check-if-all-characters-have-equal-number-of-occurrences/
     public static boolean areOccurrencesEqual(String s) {
     Map<Character,Integer>map=new HashMap<>();
     Set<Integer>set=new HashSet<>();
@@ -100,6 +286,7 @@ public class Main {
     return set.size()==1?true:false;
 
     }
+   // https://leetcode.com/problems/length-of-the-longest-alphabetical-continuous-substring/
     public static int longestContinuousSubstring(String s) {
         int count=1,max=1;
         for (int i=0;i<s.length()-1;i++){
@@ -112,6 +299,21 @@ public class Main {
         }
          return max;
     }
+    //https://leetcode.com/problems/maximum-matching-of-players-with-trainers/
+    public int matchPlayersAndTrainers(int[] players, int[] trainers) {
+        int i=0,j=0,res=0;
+        Arrays.sort(players);
+        Arrays.sort(trainers);
+        while(i<players.length&&j<trainers.length){
+            if(players[i]<=trainers[j]){
+                i++;
+                res++;
+            }
+            j++;
+        }
+        return res;
+    }
+    //https://leetcode.com/problems/maximum-ascending-subarray-sum/
     public static int maxAscendingSum(int[] nums) {
      int sum=nums[0],max=Integer.MIN_VALUE;
 
