@@ -1,12 +1,74 @@
 import java.io.IOException;
 import java.util.*;
 public class Main {
-        static Scanner input=new Scanner(System.in);
+           static Scanner input=new Scanner(System.in);
     public static void main(String[] args) throws IOException {
-       String s=input.next();
-        System.out.println(isPalindromicSubString(s));
+       int n=input.nextInt();
 
+       int r=input.nextInt();
+       int [][]arr=new int[r][2];
+       for (int i=0;i<r;i++){
+           for (int j=0;j<2;j++){
+               arr[i][j]=input.nextInt();
+           }
+       }
+        System.out.println(hardestWorker(n,arr));
     }
+ //https://leetcode.com/problems/the-employee-that-worked-on-the-longest-task/
+    public static int hardestWorker(int n, int[][] logs) {
+           Map<Integer,Integer>map=new HashMap<>();
+           int max=Integer.MIN_VALUE;
+           map.put(logs[0][0],logs[0][1]);
+           for (int i=1;i<logs.length;i++){
+               if (map.containsKey(logs[i][0])){
+                   max=Math.max(map.get(logs[i][0]),Math.abs(logs[i][1]-logs[i-1][1]));
+                   map.put(logs[i][0],max);
+               }else {
+                   map.put(logs[i][0],Math.abs(logs[i-1][1]-logs[i][1]));
+               }
+           }
+          int res=Integer.MIN_VALUE,ans=0;
+           for (int i:map.keySet()){
+               if (map.get(i)>res){
+                   res=map.get(i);
+                   ans=i;
+               }else if (map.get(i)==res){
+                   ans=Math.min(ans,i);
+               }
+           }
+           return ans;
+    }
+   //https://leetcode.com/problems/find-the-original-array-of-prefix-xor/
+    public static int[] findArray(int[] pref) {
+          int []res=new int[pref.length];
+          res[0]=pref[0];
+          for (int i=1;i<pref.length;i++){
+              res[i]=pref[i]^pref[i-1];
+          }
+          return res;
+    }
+    //https://leetcode.com/problems/missing-number/
+    public static int missingNumber(int[] nums) {
+        Arrays.sort(nums);
+        if (nums[0]!=0)return 0;
+        for (int i=0;i<nums.length-1;i++){
+            if (nums[i+1]-nums[i]!=1){
+                return nums[i]+1;
+            }
+        }
+        return nums[nums.length-1]+1;
+    }
+    //https://leetcode.com/problems/add-digits/
+    public static int addDigits(int num) {
+        int ans=0;
+        while (num!=0){
+            ans+=num%10;
+            num/=10;
+        }
+        if (ans<10)return ans;
+        return addDigits(ans);
+    }
+
     //https://leetcode.com/problems/palindromic-substrings/
     public static int  isPalindromicSubString(String s){
       int res=0;
