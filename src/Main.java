@@ -3,16 +3,80 @@ import java.util.*;
 public class Main {
            static Scanner input=new Scanner(System.in);
     public static void main(String[] args) throws IOException {
-       int n=input.nextInt();
 
-       int r=input.nextInt();
-       int [][]arr=new int[r][2];
-       for (int i=0;i<r;i++){
-           for (int j=0;j<2;j++){
-               arr[i][j]=input.nextInt();
+             int n=input.nextInt();
+             int []nums=new int[n];
+             setInput(nums);
+        System.out.println(largestPerimeter(nums));
+    }
+    //https://leetcode.com/problems/largest-perimeter-triangle/
+    public static int largestPerimeter(int[] nums) {
+        Arrays.sort(nums);
+        for (int i=nums.length-3;i>=0;i--){
+            if (nums[i]+nums[i+1]>nums[i+2])
+                return nums[i]+nums[i+1]+nums[i+2];
+        }
+        return 0;
+    }
+    //https://leetcode.com/problems/island-perimeter/
+    public static int islandPerimeter(int[][] grid) {
+           int row=grid.length,col=grid[0].length;
+           int res=0;
+           for (int r=0;r<row;r++){
+               for (int c=0;c<col;c++){
+                   if (grid[r][c]==1) {
+                       res += 4;
+                       if (r > 0 && grid[r - 1][c] == 1) res -= 2;
+                       if (c > 0 && grid[r][c - 1] == 1) res -= 2;
+                   }
+               }
            }
-       }
-        System.out.println(hardestWorker(n,arr));
+           return res;
+    }
+    //https://leetcode.com/problems/concatenation-of-array/
+    public static int[] getConcatenation(int[] nums) {
+          int []ans=new int[2*nums.length];
+          int index=0,sizeAns=ans.length/2;
+          while (index<nums.length){
+              ans[index]=nums[index];
+              ans[sizeAns]=nums[index];
+              index++;
+              sizeAns++;
+          }
+          return ans;
+    }
+    //https://leetcode.com/problems/merge-strings-alternately/
+    public static String mergeAlternately(String word1, String word2) {
+          String ans="";
+          for(int i=0;i<Math.min(word1.length(),word2.length());i++){
+              ans+=word1.charAt(i);
+              ans+=word2.charAt(i);
+          }
+          if (word1.length()>word2.length()){
+              ans+=word1.substring(word2.length());
+          }else if(word1.length()<word2.length()) ans+=word2.substring(word1.length());
+          return ans;
+    }
+    //https://leetcode.com/problems/count-items-matching-a-rule/
+    public static int countMatches(List<List<String>> items, String ruleKey, String ruleValue) {
+        int ans=0;
+        Map<String,List<String>>map=new HashMap<>();
+        List<String>type=new ArrayList<>();
+        List<String>color=new ArrayList<>();
+        List<String>name=new ArrayList<>();
+            for (List<String>ls:items){
+                type.add(ls.get(0));
+                color.add(ls.get(1));
+                name.add(ls.get(2));
+            }
+            map.put("type",type);
+            map.put("color",color);
+            map.put("name",name);
+            for (String s:map.get(ruleKey)){
+                if (s.equals(ruleValue))ans++;
+            }
+
+        return ans;
     }
  //https://leetcode.com/problems/the-employee-that-worked-on-the-longest-task/
     public static int hardestWorker(int n, int[][] logs) {
