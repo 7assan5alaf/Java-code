@@ -4,10 +4,51 @@ public class Main {
            static Scanner input=new Scanner(System.in);
     public static void main(String[] args) throws IOException {
 
-             int n=input.nextInt();
-             int []nums=new int[n];
-             setInput(nums);
-        System.out.println(largestPerimeter(nums));
+       int n=input.nextInt();
+       int []arr=new int[n];
+       setInput(arr);
+        System.out.println(lastStoneWeight(arr));
+
+    }
+    //https://leetcode.com/problems/last-stone-weight/
+    public static int lastStoneWeight(int[] stones) {
+          Arrays.sort(stones);
+           int size=stones.length-1;
+             while (size!=0){
+                 stones[stones.length-2]=stones[stones.length-1]-stones[stones.length-2];
+                 stones[stones.length-1]=0;
+                 Arrays.sort(stones);
+                 size--;
+             }
+             return stones[stones.length-1];
+
+    }
+    //https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/
+    public static String removeDuplicates(String s) {
+        String ans="";
+        Stack<Character>stack=new Stack<>();
+        for (int i=0;i<s.length();i++){
+            if (!stack.isEmpty()&&stack.peek()==s.charAt(i)){
+                stack.pop();
+            }else {
+                stack.push(s.charAt(i));
+            }
+        }
+        while (!stack.isEmpty()){
+            ans=stack.pop()+ans;
+        }
+  return ans;
+    }
+    //https://leetcode.com/problems/height-checker/
+    public static int heightChecker(int[] heights) {
+         int []newArr=new int[heights.length];
+         int ans=0;
+         for (int i=0;i<heights.length;i++)newArr[i]=heights[i];
+         Arrays.sort(heights);
+         for (int i=0;i<heights.length;i++){
+             if (newArr[i]!=heights[i])ans++;
+         }
+         return ans;
     }
     //https://leetcode.com/problems/largest-perimeter-triangle/
     public static int largestPerimeter(int[] nums) {
