@@ -1,3 +1,5 @@
+import package2.Lol;
+
 import java.math.BigInteger;
 import java.util.*;
 
@@ -48,6 +50,7 @@ public class Hassan {
 //            }
 //        }
 //        System.out.println(count);
+
 
         List<Integer> out = new ArrayList<>();
         int n = in.nextInt(); //number of pepole
