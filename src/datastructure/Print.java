@@ -1,16 +1,16 @@
 package datastructure;
 
-public class Print {
-    public static void main(String[] args) {
+import java.util.Scanner;
 
-        LinkedList ls=new LinkedList();
-        ls.add(10);
-        ls.add(15);
-        ls.add(1);
-        ls.add(30);
-        ls.add(17);
-        ls.add_First(47);
-        ls.display();
-        System.out.println(ls.search(1));
+public class Print {
+    static Scanner input=new Scanner(System.in);
+    public static void main(String[] args) {
+         int n=input.nextInt();
+         int []merge=new int[n];
+         for (int i=0;i<n;i++)merge[i]=input.nextInt();
+       Algorithm.mergeSort(merge,0,n-1);
+       Algorithm.printArray(merge);
+
+
     }
 }
